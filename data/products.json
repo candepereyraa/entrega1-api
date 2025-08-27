@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "title": "Fideos",
+    "description": "Fideos de 500g",
+    "price": 10,
+    "thumbnail": ["images/fideos.jpg"],
+    "code": "FDO001",
+    "stock": 50,
+    "status": true,
+    "category": "pastas"
+  },
+  {
+    "id": 2,
+    "title": "Tomate",
+    "description": "Tomates frescos por kg",
+    "price": 15,
+    "thumbnail": ["images/tomate.jpg"],
+    "code": "TMT002",
+    "stock": 30,
+    "status": true,
+    "category": "verduras"
+  },
+  {
+    "id": 3,
+    "title": "Cebolla",
+    "description": "Cebollas por kg",
+    "price": 12,
+    "thumbnail": ["images/cebolla.jpg"],
+    "code": "CBL003",
+    "stock": 40,
+    "status": true,
+    "category": "verduras"
+  }
+]
