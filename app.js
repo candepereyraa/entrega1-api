@@ -1,15 +1,14 @@
 const express = require('express');
 const ProductManager = require('./managers/ProductManager');
 const CartManager = require('./managers/CartManager');
-const productsRouter = express.Router();
 const app = express();
 const PORT = 8080;
 
 const productManager = new ProductManager('./data/products.json');
 const cartManager = new CartManager('./data/carts.json');
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 // Rutas para productos
 app.get('/api/products', async (req, res) => {
