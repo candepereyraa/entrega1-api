@@ -1,6 +1,6 @@
-const fs = require("fs/promises");
+import fs from "fs/promises";
 
-class CartManager {
+export default class CartManager {
   constructor(filePath) {
     this.filePath = filePath;
   }
@@ -49,5 +49,3 @@ class CartManager {
     return cart;
   }
 }
-
-module.exports = CartManager;
