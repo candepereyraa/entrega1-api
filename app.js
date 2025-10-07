@@ -3,16 +3,19 @@ import { engine } from "express-handlebars";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
-import ProductManager from "./managers/ProductManager.js"; // ajusta ruta según tu repo
+import productsRouter from "./routes/products.router.js";
+import cartsRouter from "./routes/carts.router.js";
+import connectMongo from "./config/mongo.config.js";
 
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-const productManager = new ProductManager("./data/products.json"); // ajusta a tu implementación
+connectMongo();
 
 // Configuración de Handlebars
-app.engine("handlebars", engine());
+
+app.engine("handlebars", engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 
@@ -21,32 +24,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// Rutas
+// Rutas API
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+
+// Rutas de vistas 
 app.use("/", viewsRouter);
 
-// WebSockets
-io.on("connection", async (socket) => {
-  console.log("Cliente conectado");
-
-  // Emitir lista inicial
-  const products = await productManager.getProducts();
-  socket.emit("updateProducts", products);
-
-  // Escuchar nuevo producto
-  socket.on("newProduct", async (product) => {
-    await productManager.addProduct(product);
-    const updated = await productManager.getProducts();
-    io.emit("updateProducts", updated);
-  });
-
-  // Escuchar eliminar producto
-  socket.on("deleteProduct", async (id) => {
-    if (typeof productManager.deleteProduct === "function") {
-      await productManager.deleteProduct(id);
-      const updated = await productManager.getProducts();
-      io.emit("updateProducts", updated);
-    }
-  });
+// WebSockets 
+io.on("connection", (socket) => {
+  console.log("Cliente conectado via WebSocket");
 });
 
 // Levantar servidor

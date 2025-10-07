@@ -1,0 +1,23 @@
+<h1>Productos</h1>
+
+<ul>
+  {{#each products}}
+    <li>
+      <h3>{{this.title}}</h3>
+      <p>Precio: ${{this.price}}</p>
+      <p>Categoría: {{this.category}}</p>
+      <p>Disponibilidad: {{#if this.status}}Disponible{{else}}No disponible{{/if}}</p>
+      <button class="add-to-cart" data-id="{{this._id}}">Agregar al carrito</button>
+    </li>
+  {{/each}}
+</ul>
+
+<div class="pagination">
+  {{#if pagination.hasPrevPage}}
+    <a href="?page={{pagination.prevPage}}">Anterior</a>
+  {{/if}}
+  <span>Página {{pagination.page}} de {{pagination.totalPages}}</span>
+  {{#if pagination.hasNextPage}}
+    <a href="?page={{pagination.nextPage}}">Siguiente</a>
+  {{/if}}
+</div>

@@ -1,30 +1,24 @@
-import fs from "fs/promises";
+import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
-export default class ProductManager {
-  constructor(path) {
-    this.path = path;
-  }
 
-  async getProducts() {
-    try {
-      const data = await fs.readFile(this.path, "utf-8");
-      return JSON.parse(data);
-    } catch (err) {
-      return [];
-    }
-  }
-
-  async getProductById(id) {
-    const products = await this.getProducts();
-    return products.find(p => p.id === id);
-  }
-
-  async addProduct(product) {
-    const products = await this.getProducts();
-    const newId = products.length ? products[products.length - 1].id + 1 : 1;
-    const newProduct = { id: newId, ...product };
-    products.push(newProduct);
-    await fs.writeFile(this.path, JSON.stringify(products, null, 2));
-    return newProduct;
-  }
+if (mongoose.models.Product) {
+  delete mongoose.models.Product;
 }
+
+const productSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String },
+  price: { type: Number, required: true },
+  category: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  stock: { type: Number, default: 0 },
+  thumbnail: { type: String },
+});
+
+productSchema.plugin(mongoosePaginate);
+
+const ProductModel = mongoose.model("Product", productSchema);
+
+export default ProductModel;
+
