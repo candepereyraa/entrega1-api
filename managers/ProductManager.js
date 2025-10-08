@@ -1,24 +1,15 @@
-import mongoose from "mongoose";
-import mongoosePaginate from "mongoose-paginate-v2";
+import Product from "../dao/models/product.model.js";
 
 
-if (mongoose.models.Product) {
-  delete mongoose.models.Product;
+class ProductManager {
+  async getProducts() {
+    return await Product.find();
+  }
+
+  async addProduct(data) {
+    return await Product.create(data);
+  }
 }
 
-const productSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String },
-  price: { type: Number, required: true },
-  category: { type: String, required: true },
-  status: { type: Boolean, default: true },
-  stock: { type: Number, default: 0 },
-  thumbnail: { type: String },
-});
-
-productSchema.plugin(mongoosePaginate);
-
-const ProductModel = mongoose.model("Product", productSchema);
-
-export default ProductModel;
+export default ProductManager;
 

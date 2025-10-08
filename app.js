@@ -6,15 +6,19 @@ import viewsRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import connectMongo from "./config/mongo.config.js";
+import ProductManager from "./dao/models/product.model.js";
 
 const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-connectMongo();
+// 🔹 Conectá a Mongo antes de instanciar managers
+await connectMongo();
+
+// 🔹 Instanciá los managers después de la conexión
+const productManager = new ProductManager();
 
 // Configuración de Handlebars
-
 app.engine("handlebars", engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.set("views", "./views");
@@ -28,10 +32,10 @@ app.use(express.static("public"));
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 
-// Rutas de vistas 
+// Rutas de vistas
 app.use("/", viewsRouter);
 
-// WebSockets 
+// WebSockets
 io.on("connection", (socket) => {
   console.log("Cliente conectado via WebSocket");
 });
