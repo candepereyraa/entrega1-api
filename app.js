@@ -6,7 +6,8 @@ import viewsRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import connectMongo from "./config/mongo.config.js";
-import ProductManager from "./dao/models/product.model.js";
+import ProductManager from "./managers/ProductManager.js";
+
 
 const app = express();
 const httpServer = createServer(app);
@@ -41,6 +42,6 @@ io.on("connection", (socket) => {
 });
 
 // Levantar servidor
-httpServer.listen(8080, () => {
-  console.log("Servidor escuchando en http://localhost:8080");
+httpServer.listen(1011, () => {
+  console.log("Servidor escuchando en http://localhost:1011");
 });

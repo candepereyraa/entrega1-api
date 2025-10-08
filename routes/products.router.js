@@ -70,6 +70,6 @@ router.get('/:pid', async (req, res) => {
   }
 });
 
-// Otros endpoints de productos (POST, PUT, DELETE) los adaptás de igual forma usando ProductModel
+
 
 export default router;
