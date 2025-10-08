@@ -42,6 +42,6 @@ io.on("connection", (socket) => {
 });
 
 // Levantar servidor
-httpServer.listen(1011, () => {
-  console.log("Servidor escuchando en http://localhost:1011");
+httpServer.listen(1921, () => {
+  console.log("Servidor escuchando en http://localhost:1921");
 });

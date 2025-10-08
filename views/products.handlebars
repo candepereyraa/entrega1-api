@@ -1,16 +1,25 @@
 <h1>Productos</h1>
 
-{{#if error}}
-  <p style="color:red">{{error}}</p>
-{{/if}}
-
 {{#if products.length}}
   <ul>
     {{#each products}}
-      <li>{{this.title}} - ${{this.price}}</li>
+      <li>
+        <strong>{{this.title}}</strong> - ${{this.price}} - {{this.category}}
+      </li>
     {{/each}}
   </ul>
+
+  <div>
+    {{#if pagination.hasPrevPage}}
+      <a href="{{pagination.prevLink}}">Anterior</a>
+    {{/if}}
+
+    Página {{pagination.page}} de {{pagination.totalPages}}
+
+    {{#if pagination.hasNextPage}}
+      <a href="{{pagination.nextLink}}">Siguiente</a>
+    {{/if}}
+  </div>
 {{else}}
   <p>No hay productos disponibles</p>
 {{/if}}
-
